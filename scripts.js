@@ -27,4 +27,5 @@ document.getElementById('appointmentForm').addEventListener('submit', async func
       alert('An error occurred');
     }
   });
+ 
   
