@@ -1,63 +1,38 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const mysql = require('mysql');
 const bodyParser = require('body-parser');
-
+const cors = require('cors'); // Import CORS
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Middleware
+app.use(cors()); // Use CORS middleware to enable CORS
 app.use(bodyParser.json());
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/appointmentsDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.log(err));
-
-// Appointment Schema
-const appointmentSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  date: String,
-  time: String,
-  reason: String
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'quickslot'
 });
 
-// Appointment Model
-const Appointment = mongoose.model('Appointment', appointmentSchema);
+db.connect(err => {
+  if (err) throw err;
+  console.log('Database connected!');
+});
 
-// Routes
-app.post('/appointments', async (req, res) => {
+app.post('/NEXTINLINE', (req, res) => {
   const { name, email, date, time, reason } = req.body;
-  
-  const newAppointment = new Appointment({
-    name,
-    email,
-    date,
-    time,
-    reason
+  const query = 'INSERT INTO appointments (name, email, date, time, reason) VALUES (?, ?, ?, ?, ?)';
+
+  db.query(query, [name, email, date, time, reason], (err, result) => {
+    if (err) {
+      console.error('Database error:', err);
+      res.status(500).json({ error: 'Failed to book appointment' });
+    } else {
+      res.status(200).json({ message: 'Appointment successfully booked!' });
+    }
   });
-
-  try {
-    await newAppointment.save();
-    res.status(201).send('Appointment booked successfully');
-  } catch (error) {
-    res.status(400).send('Error booking appointment');
-  }
 });
 
-app.get('/appointments', async (req, res) => {
-  try {
-    const appointments = await Appointment.find({});
-    res.json(appointments);
-  } catch (error) {
-    res.status(500).send('Error fetching appointments');
-  }
-});
-
-// Start Server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
 });

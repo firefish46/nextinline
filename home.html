@@ -8,6 +8,21 @@
     
 </head>
 <body>
+    <div id="data"></div>
+  
+    <script>
+      fetch('http://localhost:3000/data')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('data');
+          data.forEach(item => {
+            const div = document.createElement('div');
+            div.textContent = JSON.stringify(item);
+            container.appendChild(div);
+          });
+        })
+        .catch(error => console.error('Error:', error));
+    </script>
 
     <h1>QuickSlot</h1>
     <h2>Available Doctors</h2>
