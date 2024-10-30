@@ -8,10 +8,11 @@ document.getElementById('appointmentForm').addEventListener('submit', async func
     const reason = document.getElementById('reason').value;
     
     const appointment = { name, email, date, time, reason };
+    console.log(appointment)
     
   
     try {
-     const response = await fetch('http://localhost:3000/NEXTINLINE', {
+     const response = await fetch('http://localhost:8080/NEXTINLINE', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(appointment)
