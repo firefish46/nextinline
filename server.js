@@ -33,6 +33,23 @@ app.post('/NEXTINLINE', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
+app.listen(8043, () => {
+  console.log('Server running on port 8043');
 });
+
+
+// Add this route in your existing server.js file
+app.get('/appointments', (req, res) => {
+  console.log('Received request for appointments');
+  const query = 'SELECT * FROM appointments';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error retrieving appointments');
+    } else {
+      console.log('Retrieved appointments:', results);
+      res.json(results);
+    }
+  });
+});
+
