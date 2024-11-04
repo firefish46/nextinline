@@ -1,75 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuickSlot - Appointment Booking</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickSlot</title>
+    <link rel="stylesheet" href="dstyle.css">
+    
 </head>
+
+<iframe src="menubar.html" frameborder="0" style="width: 100%; height:fit-content"   ></iframe>
+
+  
 <body>
-  <header>
-    <nav>
-      <div class="logo">QuickSlot</div>
-      <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-  </header> 
 
-  <main>
-    <section class="appointment-form">
-      <h1>Book an Appointment</h1>
-      <form id="appointmentForm">
-        <div class="form-group">
-          <label for="name">Full Name:</label>
-          <input type="text" id="name" required>
+
+   
+
+
+    <div id="data"></div>
+  
+    <script>
+      fetch('http://localhost:3000/data')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('data');
+          data.forEach(item => {
+            const div = document.createElement('div');
+            div.textContent = JSON.stringify(item);
+            container.appendChild(div);
+          });
+        })
+        .catch(error => console.error('Error:', error));
+    </script>
+    <h2>Available Doctors</h2>
+    <div class="card-container">
+        <div class="card">
+            <img src="https://via.placeholder.com/100" alt="Doctor 1">
+            <h3>Dr. Mehedi Hasan</h3>
+            <p>Cardiologist</p>
+            <button onclick="viewProfile('doc1.html')">View Profile</button>
         </div>
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" required>
+        <div class="card">
+            <img src="https://via.placeholder.com/100" alt="Doctor 2">
+            <h3>Dr. Jane Smith</h3>
+            <p>Dermatologist</p>
+            <button onclick="viewProfile('doc2.html')">View Profile</button>
         </div>
-        <div class="form-group">
-          <label for="date">Preferred Date:</label>
-          <input type="date" id="date" required>
+        <div class="card">
+            <img src="https://via.placeholder.com/100" alt="Doctor 3">
+            <h3>Dr. luney hook</h3>
+            <p>Dermatologist</p>
+            <button onclick="viewProfile('doc3.html')">View Profile</button>
         </div>
-        <div class="form-group">
-          <label for="time">Preferred Time:</label>
-          <input type="time" id="time" required>
+        <div class="card">
+            <img src="https://via.placeholder.com/100" alt="Doctor 3">
+            <h3>Dr. luney hook</h3>
+            <p>Dermatologist</p>
+            <button onclick="viewProfile('doc3.html')">View Profile</button>
         </div>
-        <div class="form-group">
-          <label for="reason">Reason for Appointment:</label>
-          <textarea id="reason" rows="4" required></textarea>
+        <div class="card">
+            <img src="https://via.placeholder.com/100" alt="Doctor 3">
+            <h3>Dr. luney hook</h3>
+            <p>Dermatologist</p>
+            <button onclick="viewProfile('doc3.html')">View Profile</button>
         </div>
-        <button>
-          <div class="svg-wrapper-1">
-            <div class="svg-wrapper">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-              >
-                <path fill="none" d="M0 0h24v24H0z"></path>
-                <path
-                  fill="currentColor"
-                  d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                ></path>
-              </svg>
-            </div>
-          </div>
-          <span>submit</span>
-        </button>
         
-      </form>
-    </section>
-  </main>
+    </div>
 
-  <footer>
-    <p>© 2024 EduConnect. All Rights Reserved.</p>
-  </footer>
+    <script>
+        function viewProfile(page) {
+            window.location.href = page;
+        }
+    </script>
 
-  <script src="scripts.js"></script>
 </body>
 </html>
